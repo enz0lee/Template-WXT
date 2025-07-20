@@ -1,29 +1,27 @@
-import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
+import eslintConfigPrettier from 'eslint-config-prettier'
+import react from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
-import path from 'path'
 import tseslint from 'typescript-eslint'
-import { fileURLToPath } from 'url'
 import autoImports from './.wxt/eslint-auto-imports.mjs'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-})
 
 export default [
   autoImports,
-  ...compat.extends(
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'prettier'
-  ),
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      react,
+      'react-hooks': reactHooks,
+    },
+    rules: {
+      ...react.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+    },
+  },
+  eslintConfigPrettier,
   {
     languageOptions: {
       parser: tseslint.parser,
