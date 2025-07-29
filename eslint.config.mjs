@@ -5,10 +5,8 @@ import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
-import autoImports from './.wxt/eslint-auto-imports.mjs'
 
 export default [
-  autoImports,
   js.configs.recommended,
   ...tseslint.configs.recommended,
   eslintConfigPrettier,
@@ -42,6 +40,7 @@ export default [
     rules: {
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
+      'no-undef': 'error',
       'react/react-in-jsx-scope': 'off',
       'jsx-a11y/alt-text': 'error',
       '@typescript-eslint/no-unused-vars': [
